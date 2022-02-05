@@ -2,13 +2,35 @@
 
 Following this steps you can build and use the image to create a Hadoop Single Node Cluster containers.
 
+Users defined in container:
+- hduser: default user
+- nifi: for connection from nifi without authentication
+
 ## Creating the hadoop image
 
      $ git clone https://github.com/rancavil/hadoop-single-node-cluster.git
      $ cd hadoop-single-node-cluster
      $ docker build -t hadoop .
 
-## Creating the container
+
+## Creating container with docker-compose
+```yml
+version: "3"
+services:
+  hadoop:
+    container_name: hadoop
+    image: hadoop
+    ports:
+      - 9000:9000
+      - 9870:9870
+    networks:
+      - dev-net
+networks:
+  dev-net:
+    driver: bridge
+```
+
+## Creating the container with docker
 
 To run and create a container execute the next command:
 
@@ -33,7 +55,11 @@ To check if hadoop container is working go to the url in your browser.
           <value>false</value>
      </property>
 
+
+
 ## A first example
+
+     $ docker exec -it --name <container-name> bash
 
 Make the HDFS directories required to execute MapReduce jobs:
 
@@ -80,12 +106,7 @@ Checking the result using **cat** command on the distributed filesystem:
 
 To stop the container execute the following commands, to gratefully shutdown.
 
-     hduser@localhost:~$ stop-dfs.sh
-     hduser@localhost:~$ stop-yarn.sh
-
-After that.
-
-     hduser@localhost:~$ exit
+     $ docker stop <container-name>
 
 To re-start the container, and go back to our Hadoop environment execute:
 
