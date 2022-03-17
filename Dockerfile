@@ -54,6 +54,7 @@ RUN echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> $HADOOP_HOME/et
 COPY core-site.xml $HADOOP_HOME/etc/hadoop/
 COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/
 COPY yarn-site.xml $HADOOP_HOME/etc/hadoop/
+COPY mapred-site.xml $HADOOP_HOME/etc/hadoop/
 
 COPY docker-entrypoint.sh $HADOOP_HOME/etc/hadoop/
 
